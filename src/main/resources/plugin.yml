@@ -7,6 +7,8 @@ commands:
       description: You can convert formatting code between "section symbol" and "ampersand" in command block commands.
       usage: /<command>
       aliases: [fcc]
+      permission: fcc.command
+      permission-message: You don't have <permission>
 permissions:
     fcc.*:
         description: All permission in FormattingCodeConverter

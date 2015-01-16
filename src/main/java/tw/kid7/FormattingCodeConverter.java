@@ -51,126 +51,117 @@ public class FormattingCodeConverter extends JavaPlugin implements Listener {
     @SuppressWarnings("deprecation")
     public boolean onCommand(CommandSender sender, Command cmd, String lable, String[] args) {
         if (lable.equalsIgnoreCase("FormattingCodeConverter") || lable.equalsIgnoreCase("fcc")) {
-            Player player = null;
             //從Console下指令
             if (!(sender instanceof Player)) {
                 //sender.sendMessage(prefix + "只有遊戲中的玩家可以執行此指令");
                 sender.sendMessage(prefix + "This command can only be used by player in game.");
                 return true;
-            } else {
-                player = (Player) sender;
             }
             //玩家下指令
-            if (player.hasPermission("fcc.command")) {
-                if (args.length == 0) {
-                    //沒有參數
-                    showHelp(player);
-                } else if (args.length >= 1) {
-                    //有參數
-                    switch (args[0]) {
-                        //幫助
-                        case "help":
-                        case "h":
-                        case "?":
-                            showHelp(player);
-                            break;
-                        //指令方塊文字代碼符號轉換
-                        case "cb":
-                            //取得指向的指令方塊（忽視其他方塊）
-                            //需要忽略的方塊
-                            HashSet<Byte> transparent = new HashSet<Byte>();
-                            transparent.add((byte) Material.AIR.getId());                //空氣
-                            transparent.add((byte) Material.WALL_SIGN.getId());            //木牌（牆上）
-                            transparent.add((byte) Material.SIGN.getId());                //木牌（地上）
-                            transparent.add((byte) Material.STONE_BUTTON.getId());        //石頭按鈕
-                            transparent.add((byte) Material.WOOD_BUTTON.getId());        //木頭按鈕
-                            transparent.add((byte) Material.STONE_PLATE.getId());        //石製壓力板
-                            transparent.add((byte) Material.WOOD_PLATE.getId());        //木製壓力板
-                            transparent.add((byte) Material.LEVER.getId());                //拉桿
-                            transparent.add((byte) Material.REDSTONE_WIRE.getId());        //紅石線
-                            transparent.add((byte) Material.STATIONARY_WATER.getId());    //水
-                            transparent.add((byte) Material.STATIONARY_LAVA.getId());    //岩漿
-                            //距離限制
-                            int maxDistance = 20;
-                            //找出指向的方塊
-                            //Block targetBlock = player.getTargetBlock(null, maxDistance);
-                            Block targetBlock = player.getWorld().getBlockAt(player.getLocation());
-                            for (Block b : player.getLineOfSight(transparent, maxDistance)) {
-                                //if (!b.getType().equals(Material.AIR)) { targetBlock = b; break; }
-                                //player.sendMessage(prefix + b.toString());
-                                targetBlock = b;
-                                if (b.getType().equals(Material.COMMAND))
-                                    break;
-                            }
-                            //檢查是否為指令方塊
-                            if (targetBlock.getType().equals(Material.COMMAND)) {
-                                CommandBlock cmdBlock = (CommandBlock) targetBlock.getState();
-                                //兩個參數（轉變指令方塊文字代碼格式）
-                                if (args.length == 1) {
-                                    //印出指令
-                                    //player.sendMessage(prefix + "指令方塊：");
-                                    //player.sendMessage(prefix + "Command block commands:");
-                                    player.sendMessage(prefix + getLang(player, "Command-block-commands"));
-                                    player.sendMessage(cmdBlock.getCommand());
-                                    //後續指令
-                                    //player.sendMessage(prefix + ChatColor.RED + "/fcc cb 1" + ChatColor.GRAY + ": 將" + ChatColor.GOLD + "&" + ChatColor.GRAY + "轉成" + ChatColor.GOLD + "\u00a7");
-                                    //player.sendMessage(prefix + ChatColor.RED + "/fcc cb 2" + ChatColor.GRAY + ": 將" + ChatColor.GOLD + "\u00a7" + ChatColor.GRAY + "轉成" + ChatColor.GOLD + "&");
-                                    //player.sendMessage(prefix + ChatColor.RED + "/fcc cb 1 " + ChatColor.GRAY + ": Convert " + ChatColor.GOLD + "& (ampersand)" + ChatColor.GRAY + " to " + ChatColor.GOLD + "\u00a7 (section symbol)");
-                                    //player.sendMessage(prefix + ChatColor.RED + "/fcc cb 2 " + ChatColor.GRAY + ": Convert " + ChatColor.GOLD + "\u00a7 (section symbol)" + ChatColor.GRAY + " to " + ChatColor.GOLD + "& (ampersand)");
-                                    player.sendMessage(prefix + ChatColor.RED + "/fcc cb 1 " + ChatColor.GRAY + ": " + getLang(player, "Help.fcc-cb-1"));
-                                    player.sendMessage(prefix + ChatColor.RED + "/fcc cb 2 " + ChatColor.GRAY + ": " + getLang(player, "Help.fcc-cb-2"));
-                                } else if (args.length == 2) {
-                                    switch (args[1]) {
-                                        case "1":
-                                            //將&轉為§
-                                            //cmdBlock.setCommand(cmdBlock.getCommand().replaceAll("&", "\u00a7"));
-                                            cmdBlock.setCommand(ChatColor.translateAlternateColorCodes('&', cmdBlock.getCommand()));
-                                            cmdBlock.update();
-                                            //player.sendMessage(prefix + "轉換後的指令方塊：");
-                                            //player.sendMessage(prefix + "Commands after convert:");
-                                            player.sendMessage(prefix + getLang(player, "Commands-after-convert"));
-                                            player.sendMessage(cmdBlock.getCommand());
-                                            break;
-                                        case "2":
-                                            //將§轉為&
-                                            cmdBlock.setCommand(cmdBlock.getCommand().replaceAll("\u00a7", "&"));
-                                            cmdBlock.update();
-                                            //player.sendMessage(prefix + "Commands after convert:");
-                                            player.sendMessage(prefix + getLang(player, "Commands-after-convert"));
-                                            player.sendMessage(cmdBlock.getCommand());
-                                            break;
-                                        default:
-                                            wrongCommand(player);
-                                    }
-                                } else if (args.length > 2) {
-                                    wrongCommand(player);
+            Player player = (Player) sender;
+            if (args.length == 0) {
+                //沒有參數
+                showHelp(player);
+            } else if (args.length >= 1) {
+                //有參數
+                switch (args[0]) {
+                    //幫助
+                    case "help":
+                    case "h":
+                    case "?":
+                        showHelp(player);
+                        break;
+                    //指令方塊文字代碼符號轉換
+                    case "cb":
+                        //取得指向的指令方塊（忽視其他方塊）
+                        //需要忽略的方塊
+                        HashSet<Byte> transparent = new HashSet<Byte>();
+                        transparent.add((byte) Material.AIR.getId());                //空氣
+                        transparent.add((byte) Material.WALL_SIGN.getId());            //木牌（牆上）
+                        transparent.add((byte) Material.SIGN.getId());                //木牌（地上）
+                        transparent.add((byte) Material.STONE_BUTTON.getId());        //石頭按鈕
+                        transparent.add((byte) Material.WOOD_BUTTON.getId());        //木頭按鈕
+                        transparent.add((byte) Material.STONE_PLATE.getId());        //石製壓力板
+                        transparent.add((byte) Material.WOOD_PLATE.getId());        //木製壓力板
+                        transparent.add((byte) Material.LEVER.getId());                //拉桿
+                        transparent.add((byte) Material.REDSTONE_WIRE.getId());        //紅石線
+                        transparent.add((byte) Material.STATIONARY_WATER.getId());    //水
+                        transparent.add((byte) Material.STATIONARY_LAVA.getId());    //岩漿
+                        //距離限制
+                        int maxDistance = 20;
+                        //找出指向的方塊
+                        //Block targetBlock = player.getTargetBlock(null, maxDistance);
+                        Block targetBlock = player.getWorld().getBlockAt(player.getLocation());
+                        for (Block b : player.getLineOfSight(transparent, maxDistance)) {
+                            //if (!b.getType().equals(Material.AIR)) { targetBlock = b; break; }
+                            //player.sendMessage(prefix + b.toString());
+                            targetBlock = b;
+                            if (b.getType().equals(Material.COMMAND))
+                                break;
+                        }
+                        //檢查是否為指令方塊
+                        if (targetBlock.getType().equals(Material.COMMAND)) {
+                            CommandBlock cmdBlock = (CommandBlock) targetBlock.getState();
+                            //兩個參數（轉變指令方塊文字代碼格式）
+                            if (args.length == 1) {
+                                //印出指令
+                                //player.sendMessage(prefix + "指令方塊：");
+                                //player.sendMessage(prefix + "Command block commands:");
+                                player.sendMessage(prefix + getLang(player, "Command-block-commands"));
+                                player.sendMessage(cmdBlock.getCommand());
+                                //後續指令
+                                //player.sendMessage(prefix + ChatColor.RED + "/fcc cb 1" + ChatColor.GRAY + ": 將" + ChatColor.GOLD + "&" + ChatColor.GRAY + "轉成" + ChatColor.GOLD + "\u00a7");
+                                //player.sendMessage(prefix + ChatColor.RED + "/fcc cb 2" + ChatColor.GRAY + ": 將" + ChatColor.GOLD + "\u00a7" + ChatColor.GRAY + "轉成" + ChatColor.GOLD + "&");
+                                //player.sendMessage(prefix + ChatColor.RED + "/fcc cb 1 " + ChatColor.GRAY + ": Convert " + ChatColor.GOLD + "& (ampersand)" + ChatColor.GRAY + " to " + ChatColor.GOLD + "\u00a7 (section symbol)");
+                                //player.sendMessage(prefix + ChatColor.RED + "/fcc cb 2 " + ChatColor.GRAY + ": Convert " + ChatColor.GOLD + "\u00a7 (section symbol)" + ChatColor.GRAY + " to " + ChatColor.GOLD + "& (ampersand)");
+                                player.sendMessage(prefix + ChatColor.RED + "/fcc cb 1 " + ChatColor.GRAY + ": " + getLang(player, "Help.fcc-cb-1"));
+                                player.sendMessage(prefix + ChatColor.RED + "/fcc cb 2 " + ChatColor.GRAY + ": " + getLang(player, "Help.fcc-cb-2"));
+                            } else if (args.length == 2) {
+                                switch (args[1]) {
+                                    case "1":
+                                        //將&轉為§
+                                        //cmdBlock.setCommand(cmdBlock.getCommand().replaceAll("&", "\u00a7"));
+                                        cmdBlock.setCommand(ChatColor.translateAlternateColorCodes('&', cmdBlock.getCommand()));
+                                        cmdBlock.update();
+                                        //player.sendMessage(prefix + "轉換後的指令方塊：");
+                                        //player.sendMessage(prefix + "Commands after convert:");
+                                        player.sendMessage(prefix + getLang(player, "Commands-after-convert"));
+                                        player.sendMessage(cmdBlock.getCommand());
+                                        break;
+                                    case "2":
+                                        //將§轉為&
+                                        cmdBlock.setCommand(cmdBlock.getCommand().replaceAll("\u00a7", "&"));
+                                        cmdBlock.update();
+                                        //player.sendMessage(prefix + "Commands after convert:");
+                                        player.sendMessage(prefix + getLang(player, "Commands-after-convert"));
+                                        player.sendMessage(cmdBlock.getCommand());
+                                        break;
+                                    default:
+                                        wrongCommand(player);
                                 }
-                            } else {
-                                if (!targetBlock.getType().equals(Material.AIR)) {
-                                    //player.sendMessage(prefix + "目標方塊：" + targetBlock.getType());
-                                    //player.sendMessage(prefix + "Target block: " + targetBlock.getType());
-                                    player.sendMessage(prefix + getLang(player, "Target-block") + targetBlock.getType());
-                                }
-                                //player.sendMessage(prefix + "必須指向指令方塊");
-                                //player.sendMessage(prefix + "You must target (look at) a command block.");
-                                player.sendMessage(prefix + getLang(player, "You-must-target-a-command-block"));
+                            } else if (args.length > 2) {
+                                wrongCommand(player);
                             }
-                            break;
-                        //關於
-                        case "about":
-                            showAbout(player);
-                            break;
-                        default:
-                            wrongCommand(player);
-                    }
+                        } else {
+                            if (!targetBlock.getType().equals(Material.AIR)) {
+                                //player.sendMessage(prefix + "目標方塊：" + targetBlock.getType());
+                                //player.sendMessage(prefix + "Target block: " + targetBlock.getType());
+                                player.sendMessage(prefix + getLang(player, "Target-block") + targetBlock.getType());
+                            }
+                            //player.sendMessage(prefix + "必須指向指令方塊");
+                            //player.sendMessage(prefix + "You must target (look at) a command block.");
+                            player.sendMessage(prefix + getLang(player, "You-must-target-a-command-block"));
+                        }
+                        break;
+                    //關於
+                    case "about":
+                        showAbout(player);
+                        break;
+                    default:
+                        wrongCommand(player);
                 }
-                return true;
-            } else {
-                //player.sendMessage(prefix + "權限不足");
-                //player.sendMessage(prefix + "You don't have permission.");
-                player.sendMessage(prefix + getLang(player, "No-permission"));
-                return true;
             }
+            return true;
         }
         return false;
     }

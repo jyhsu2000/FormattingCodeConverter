@@ -3,7 +3,6 @@ Command-block-commands: "\u6307\u4ee4\u65b9\u5757\uff1a"
 Commands-after-convert: "\u8f6c\u6362\u540e\u7684\u6307\u4ee4\u65b9\u5757\uff1a"
 Target-block: "\u76ee\u6807\u65b9\u5757\uff1a"
 You-must-target-a-command-block: "\u5fc5\u987b\u6307\u5411\u6307\u4ee4\u65b9\u5757"
-No-permission: "\u4f60\u6ca1\u6709\u8db3\u591f\u7684\u6743\u9650"
 Help:
     title: "\u8bf4\u660e"
     fcc-help: "\u6307\u4ee4\u6e05\u5355"

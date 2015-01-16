@@ -3,7 +3,6 @@ Command-block-commands: "Command block commands:"
 Commands-after-convert: "Commands after convert:"
 Target-block: "Target block: "
 You-must-target-a-command-block: "You must target (look at) a command block."
-No-permission: "You don't have permission."
 Help:
     title: "Help"
     fcc-help: "Show list of commands"
