@@ -1,0 +1,19 @@
+# Language File
+Command-block-commands: "Command block commands:"
+Commands-after-convert: "Commands after convert:"
+Target-block: "Target block: "
+You-must-target-a-command-block: "You must target (look at) a command block."
+No-permission: "You don't have permission."
+Help:
+    title: "Help"
+    fcc-help: "Show list of commands"
+    fcc-cb: "Show command block commands"
+    fcc-cb-1: "Convert &c& (ampersand) &7to &esection symbol"
+    fcc-cb-2: "Convert &esection symbol &7to &c& (ampersand)"
+    about: "About"
+About:
+    title: "About"
+    Version: "Version"
+    Developer: "Developer"
+Wrong-command: "Wrong command!"
+More-help: "Type &c/fcc&7 for help."

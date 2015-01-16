@@ -1,0 +1,19 @@
+# Language File
+Command-block-commands: "指令方塊："
+Commands-after-convert: "轉換後的指令方塊："
+Target-block: "目標方塊："
+You-must-target-a-command-block: "必須指向指令方塊"
+No-permission: "你沒有足夠的權限"
+Help:
+    title: "說明"
+    fcc-help: "指令清單"
+    fcc-cb: "查詢指令方塊的指令"
+    fcc-cb-1: "將 &c& &7轉為 &e章節符號"
+    fcc-cb-2: "將 &e章節符號 &7轉為 &c&"
+    about: "關於"
+About:
+    title: "關於"
+    Version: "版本"
+    Developer: "開發者"
+Wrong-command: "指令錯誤"
+More-help: "輸入 &c/fcc&7 取得更多協助"

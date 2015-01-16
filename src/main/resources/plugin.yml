@@ -1,0 +1,17 @@
+name: FormattingCodeConverter
+main: tw.kid7.FormattingCodeConverter
+version: 2.0
+author: KID(jyhsu)
+commands:
+   FormattingCodeConverter:
+      description: You can convert formatting code between "section symbol" and "ampersand" in command block commands.
+      usage: /<command>
+      aliases: [fcc]
+permissions:
+    fcc.*:
+        description: All permission in FormattingCodeConverter
+        children:
+            fcc.command: true
+    fcc.command:
+        description: Allows you to excute FormattingCodeConverter command
+        default: op

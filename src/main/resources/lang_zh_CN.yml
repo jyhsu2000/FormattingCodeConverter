@@ -1,0 +1,19 @@
+# Language File
+Command-block-commands: "\u6307\u4ee4\u65b9\u5757\uff1a"
+Commands-after-convert: "\u8f6c\u6362\u540e\u7684\u6307\u4ee4\u65b9\u5757\uff1a"
+Target-block: "\u76ee\u6807\u65b9\u5757\uff1a"
+You-must-target-a-command-block: "\u5fc5\u987b\u6307\u5411\u6307\u4ee4\u65b9\u5757"
+No-permission: "\u4f60\u6ca1\u6709\u8db3\u591f\u7684\u6743\u9650"
+Help:
+    title: "\u8bf4\u660e"
+    fcc-help: "\u6307\u4ee4\u6e05\u5355"
+    fcc-cb: "\u67e5\u8be2\u6307\u4ee4\u65b9\u5757\u7684\u6307\u4ee4"
+    fcc-cb-1: "\u5c06 &c& &7\u8f6c\u4e3a &e\u7ae0\u8282\u7b26\u53f7"
+    fcc-cb-2: "\u5c06 &e\u7ae0\u8282\u7b26\u53f7 &7\u8f6c\u4e3a &c&"
+    about: "\u5173\u4e8e"
+About:
+    title: "\u5173\u4e8e"
+    Version: "\u7248\u672c"
+    Developer: "\u5f00\u53d1\u8005"
+Wrong-command: "\u6307\u4ee4\u9519\u8bef"
+More-help: "\u8f93\u5165 &c/fcc&7 \u53d6\u5f97\u66f4\u591a\u534f\u52a9"
